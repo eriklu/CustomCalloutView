@@ -7,25 +7,26 @@
 //
 
 #import "CustomCalloutView.h"
-
+#ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#endif
 
 #define MAX_WIDTH (SCREEN_WIDTH - 30)
 
-#define MARGIN_LEFT 5
+#define MARGIN_LEFT 10
 
 #define ICON_SIZE 35
 
 #define ICON_ARROW_SIZE 20
 
-#define MARGIN_RIGHT 5
-#define MARGIN_TOP 5
-#define MARGIN_BOTTON 5
+#define MARGIN_RIGHT 10
+#define MARGIN_TOP 10
+#define MARGIN_BOTTON 10
 
 #define TIP_ARROW_HEIGHT 15
 
-#define TITLE_TOP_MARGIN 5
-#define SUBTITLE_TOP_MARGIN 20
+#define TITLE_TOP_MARGIN 10
+#define SUBTITLE_TOP_MARGIN 30
 
 #define TITLE_FONT_SIZE 17
 
@@ -95,7 +96,7 @@
         [layoutManager addTextContainer: textContainer];
         
         UITextView *tvSubtitle = [[UITextView alloc] initWithFrame:CGRectZero textContainer:textContainer];
-        tvSubtitle.frame = CGRectMake(MARGIN_LEFT  - tvSubtitle.contentInset.left, SUBTITLE_TOP_MARGIN - tvSubtitle.contentInset.top, 0, 0);
+        tvSubtitle.frame = CGRectMake(MARGIN_LEFT  - tvSubtitle.contentInset.left, SUBTITLE_TOP_MARGIN - tvSubtitle.contentInset.top - 5, 0, 0);
         tvSubtitle.tag = 104;
         tvSubtitle.backgroundColor = [UIColor clearColor];
         tvSubtitle.scrollEnabled = NO;
@@ -193,7 +194,7 @@
         tv.frame = CGRectMake(r.origin.x, r.origin.y, width + tv.textContainerInset.left + tv.textContainerInset.right + ICON_SIZE + 10 , size.height + tv.textContainerInset.top + tv.textContainerInset.bottom + 2);
         tv.hidden = NO;
         
-        self.frame = CGRectMake(0, 0, width  - (- MARGIN_LEFT - MARGIN_RIGHT - ICON_SIZE - 10) + (self.rightArrowHidden ? 0 : (ICON_ARROW_SIZE + 10)), tv.frame.origin.y + tv.frame.size.height + 10);
+        self.frame = CGRectMake(0, 0, size.width  + MARGIN_LEFT + MARGIN_RIGHT  + (self.rightArrowHidden ? MARGIN_RIGHT : (ICON_ARROW_SIZE + 10)), tv.frame.origin.y + tv.frame.size.height + kArrorHeight);
         
 
     }else {//一行显示
@@ -204,14 +205,14 @@
         lbl.text = self.subtitle;
         lbl.frame = CGRectMake(MARGIN_LEFT + ICON_SIZE + 10, SUBTITLE_TOP_MARGIN, width, 20);
         
-        self.frame = CGRectMake(0, 0, width  - (- MARGIN_LEFT - MARGIN_RIGHT - ICON_SIZE - 10) + (self.rightArrowHidden ? 0 : (ICON_ARROW_SIZE + 10)), 60);
+        self.frame = CGRectMake(0, 0, width  - (- MARGIN_LEFT - MARGIN_RIGHT - ICON_SIZE - 10) + (self.rightArrowHidden ? 0 : (ICON_ARROW_SIZE + 10)), MARGIN_TOP + ICON_SIZE + MARGIN_BOTTON + kArrorHeight);
     }
     
     UIView *lblTitle = [self viewWithTag: 102];
     lblTitle.frame = CGRectMake(MARGIN_LEFT + ICON_SIZE + 10, TITLE_TOP_MARGIN, width, 20);
     
     UIView *ivRightArrow = [self viewWithTag: 105];
-    ivRightArrow.center = CGPointMake(self.frame.size.width - 10 - ICON_ARROW_SIZE / 2, self.frame.size.height / 2);
+    ivRightArrow.center = CGPointMake(self.frame.size.width - MARGIN_RIGHT - ICON_ARROW_SIZE / 2, (self.frame.size.height - kArrorHeight)/ 2);
     ivRightArrow.hidden = self.rightArrowHidden;
     
     UIView *btn = [self viewWithTag:100];
